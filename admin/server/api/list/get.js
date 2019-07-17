@@ -2,6 +2,7 @@ var async = require('async');
 var assign = require('object-assign');
 var listToArray = require('list-to-array');
 
+
 module.exports = function (req, res) {
 	var where = {};
 	var fields = req.query.fields;
@@ -15,13 +16,22 @@ module.exports = function (req, res) {
 			fields = listToArray(fields);
 		}
 		if (fields && !Array.isArray(fields)) {
-			return res.status(401).json({ error: 'fields must be undefined, a string, or an array' });
+			return res.status(401).json({error: 'fields must be undefined, a string, or an array'});
 		}
 	}
+	if (req.list.get('queryFilter')) {
+		req.list.get('queryFilter')(req, res, function (query_filters) {
+			where = query_filters;
+		});
+	}
+
+
 	var filters = req.query.filters;
 	if (filters && typeof filters === 'string') {
-		try { filters = JSON.parse(req.query.filters); }
-		catch (e) { } // eslint-disable-line no-empty
+		try {
+			filters = JSON.parse(req.query.filters);
+		} catch (e) {
+		} // eslint-disable-line no-empty
 	}
 	if (typeof filters === 'object') {
 		assign(where, req.list.addFiltersToQuery(filters));
@@ -30,6 +40,8 @@ module.exports = function (req, res) {
 		assign(where, req.list.addSearchToQuery(req.query.search));
 	}
 	var query = req.list.model.find(where);
+
+
 	if (req.query.populate) {
 		query.populate(req.query.populate);
 	}
