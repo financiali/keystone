@@ -63,9 +63,7 @@ var SelectColumn = React.createClass({
 			loading: true,
 		});
 
-
 		const postUrl = `${Keystone.adminPath}/api/${this.getPath()}/${this.getId()}`;
-		console.log(postUrl)
 		xhr({
 			url: postUrl,
 			responseType: 'json',
