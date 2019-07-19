@@ -50,7 +50,7 @@ function ListHeaderToolbar ({
 	list,
 
 	// expand
-	expandIsActive,
+	expandIsActive = true,
 	expandOnClick,
 
 	// list
