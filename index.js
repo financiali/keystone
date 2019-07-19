@@ -21,7 +21,7 @@ var moduleRoot = (function (_rootPath) {
 /**
  * Keystone Class
  */
-var Keystone = function () {
+var Keystone = function (config) {
 	grappling.mixin(this).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout');
 	this.lists = {};
 	this.fieldTypes = {};
