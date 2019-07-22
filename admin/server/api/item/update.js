@@ -17,13 +17,15 @@ module.exports = function (req, res) {
 					module: req.list.key,
 					action: 'update',
 					user: req.user._id
-				}).save()
+				}).save(function (err, logResponse) {
+					req.list.model.findById(req.params.id, function (err, updatedItem) {
+						res.json(req.list.getData(updatedItem));
+					});
+				})
 			}
 			// Reload the item from the database to prevent save hooks or other
 			// application specific logic from messing with the values in the item
-			req.list.model.findById(req.params.id, function (err, updatedItem) {
-				res.json(req.list.getData(updatedItem));
-			});
+
 		});
 	});
 };
