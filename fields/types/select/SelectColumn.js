@@ -34,7 +34,10 @@ var SelectColumn = React.createClass({
 
 		this.updateItem(formData, function (err, result) {
 
-			if (err) return console.error(err);
+			if (err) {
+				alert('Error: ' + err.error);
+				return err;
+			}
 
 			_parent.props.data.fields.state = newValue;
 			_parent.setState({
