@@ -33,7 +33,7 @@ module.exports = function (req, res) {
 		} catch (e) {
 		} // eslint-disable-line no-empty
 	}
-	if (typeof filters === 'object') {
+	if (where && filters && typeof filters === 'object') {
 		assign(where, req.list.addFiltersToQuery(filters));
 	}
 	if (req.query.search) {
