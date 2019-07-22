@@ -39,12 +39,19 @@ module.exports = function (req, res) {
 		}
 		async.forEachLimit(results, 10, function (item, next) {
 			item._req_user = req.user;
-			item.remove(function (err) {
-				if (err) return next(err);
-				deletedCount++;
-				deletedIds.push(item.id);
-				next();
-			});
+			if (item.delete) {
+				item.delete(req.user._id, function (a, b) {
+					next();
+				});
+			} else {
+				item.remove(function (err) {
+					if (err) return next(err);
+					deletedCount++;
+					deletedIds.push(item.id);
+					next();
+				});
+			}
+
 		}, function (err) {
 			if (err) return res.apiError(err);
 			return res.json({
