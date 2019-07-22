@@ -41,6 +41,12 @@ module.exports = function (req, res) {
 			item._req_user = req.user;
 			if (item.delete) {
 				item.delete(req.user._id, function (a, b) {
+					new keystone.lists.UserLog.model({
+						date: Date.now(),
+						module: req.list.key,
+						action: 'delete',
+						user: req.user._id
+					}).save();
 					next();
 				});
 			} else {
@@ -48,6 +54,12 @@ module.exports = function (req, res) {
 					if (err) return next(err);
 					deletedCount++;
 					deletedIds.push(item.id);
+					new keystone.lists.UserLog.model({
+						date: Date.now(),
+						module: req.list.key,
+						action: 'delete',
+						user: req.user._id
+					}).save();
 					next();
 				});
 			}

@@ -37,6 +37,7 @@ var HomeView = React.createClass({
 	},
 	render () {
 		const spinner = this.getSpinner();
+		const { User, user } = this.props;
 		return (
 			<Container data-screen-id="home">
 				<div className="dashboard-header">
@@ -61,6 +62,7 @@ var HomeView = React.createClass({
 						<div>
 							{/* Render nav with sections */}
 							{Keystone.nav.sections.map((navSection) => {
+								console.log(user)
 								return (
 									<Section key={navSection.key} id={navSection.key} label={navSection.label}>
 										<Lists

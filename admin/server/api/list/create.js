@@ -14,6 +14,13 @@ module.exports = function (req, res) {
 			var status = err.error === 'validation errors' ? 400 : 500;
 			var error = err.error === 'database error' ? err.detail : err;
 			return res.apiError(status, error);
+		} else {
+			new keystone.lists.UserLog.model({
+				date: Date.now(),
+				module: req.list.key,
+				action: 'create',
+				user: req.user._id
+			}).save()
 		}
 		res.json(req.list.getData(item));
 	});

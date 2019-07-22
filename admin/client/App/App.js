@@ -53,6 +53,8 @@ const App = (props) => {
 		<div className={css(classes.wrapper)}>
 			<header>
 				<MobileNavigation
+					User={Keystone.User}
+					user={Keystone.user}
 					brand={Keystone.brand}
 					currentListKey={props.params.listId}
 					currentSectionKey={currentSectionKey}
@@ -60,6 +62,8 @@ const App = (props) => {
 					signoutUrl={Keystone.signoutUrl}
 				/>
 				<PrimaryNavigation
+					User={Keystone.User}
+					user={Keystone.user}
 					currentSectionKey={currentSectionKey}
 					brand={Keystone.brand}
 					sections={Keystone.nav.sections}
@@ -68,13 +72,16 @@ const App = (props) => {
 				{/* If a section is open currently, show the secondary nav */}
 				{(currentSection) ? (
 					<SecondaryNavigation
+						User={Keystone.User}
+						user={Keystone.user}
 						currentListKey={props.params.listId}
 						lists={currentSection.lists}
 						itemId={props.params.itemId}
 					/>
 				) : null}
 			</header>
-			<main className={css(classes.body)}>
+			<main User={Keystone.User}
+						 user={Keystone.user} className={css(classes.body)}>
 				{children}
 			</main>
 			<Footer

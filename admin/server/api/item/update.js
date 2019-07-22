@@ -11,6 +11,13 @@ module.exports = function (req, res) {
 				var status = err.error === 'validation errors' ? 400 : 500;
 				var error = err.error === 'database error' ? err.detail : err;
 				return res.apiError(status, error);
+			}else{
+				new keystone.lists.UserLog.model({
+					date: Date.now(),
+					module: req.list.key,
+					action: 'update',
+					user: req.user._id
+				}).save()
 			}
 			// Reload the item from the database to prevent save hooks or other
 			// application specific logic from messing with the values in the item
