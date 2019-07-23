@@ -9,13 +9,12 @@ module.exports = function initList(req, res, next) {
 		req.flash('error', 'List ' + req.params.list + ' could not be found.');
 		return res.redirect('/' + keystone.get('admin path'));
 	} else {
-
-		if (!req.user.modulesList.includes(req.list.key) && !req.user.isRoot) {
+		// @todo security check very important
+		if (!req.user.modulesList.includes(req.list.key) && !req.user.isRoot && (req.query.basic && req.query.basic.toString().length)) {
 			// return res.status(501).json({error: 'invalid list path'});
-			next(new Error('test'));
+			next(new Error('Not allowed'));
 		} else {
 			next();
 		}
 	}
-
 };
