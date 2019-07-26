@@ -3,48 +3,99 @@
 // ==============================
 
 
-
-
 // Field Icons
 // icons that represent field types
 // ------------------------------
 
 .fieldicon {
-	.square( 16px );
+	.square(16px);
 	background-repeat: no-repeat;
 	display: inline-block;
 	vertical-align: middle;
 
-	&.fieldicon-text            { background-image: url( "@{adminPath}/images/icons/16/field-text.png" ); }
-	&.fieldicon-textarea        { background-image: url( "@{adminPath}/images/icons/16/field-textarea.png" ); }
-	&.fieldicon-name            { background-image: url( "@{adminPath}/images/icons/16/field-name.png" ); }
-	&.fieldicon-html            { background-image: url( "@{adminPath}/images/icons/16/field-html.png" ); }
-	&.fieldicon-url             { background-image: url( "@{adminPath}/images/icons/16/field-url.png" ); }
-	&.fieldicon-key             { background-image: url( "@{adminPath}/images/icons/16/field-key.png" ); }
-	&.fieldicon-email           { background-image: url( "@{adminPath}/images/icons/16/field-email.png" ); }
-	&.fieldicon-select          { background-image: url( "@{adminPath}/images/icons/16/field-select.png" ); }
-	&.fieldicon-location        { background-image: url( "@{adminPath}/images/icons/16/field-location.png" ); }
-	&.fieldicon-boolean         { background-image: url( "@{adminPath}/images/icons/16/field-boolean.png" ); }
-	&.fieldicon-cloudinaryimage { background-image: url( "@{adminPath}/images/icons/16/field-image.png" ); }
-	&.fieldicon-s3file          { background-image: url( "@{adminPath}/images/icons/16/field-file.png" ); }
-	&.fieldicon-relationship    { background-image: url( "@{adminPath}/images/icons/16/field-numericSelect.png" ); }
-	&.fieldicon-date            { background-image: url( "@{adminPath}/images/icons/16/field-date.png" ); }
-	&.fieldicon-datetime        { background-image: url( "@{adminPath}/images/icons/16/field-dateTime.png" ); }
-	&.fieldicon-money           { background-image: url( "@{adminPath}/images/icons/16/field-money.png" ); }
-	&.fieldicon-number          { background-image: url( "@{adminPath}/images/icons/16/field-number.png" ); }
-	&.fieldicon-sort            { background-image: url( "@{adminPath}/images/icons/16/field-sort.png" ); }
+	&.fieldicon-text {
+		background-image: url("@{adminPath}/images/icons/16/field-text.png");
+	}
+
+	&.fieldicon-textarea {
+		background-image: url("@{adminPath}/images/icons/16/field-textarea.png");
+	}
+
+	&.fieldicon-name {
+		background-image: url("@{adminPath}/images/icons/16/field-name.png");
+	}
+
+	&.fieldicon-html {
+		background-image: url("@{adminPath}/images/icons/16/field-html.png");
+	}
+
+	&.fieldicon-url {
+		background-image: url("@{adminPath}/images/icons/16/field-url.png");
+	}
+
+	&.fieldicon-key {
+		background-image: url("@{adminPath}/images/icons/16/field-key.png");
+	}
+
+	&.fieldicon-email {
+		background-image: url("@{adminPath}/images/icons/16/field-email.png");
+	}
+
+	&.fieldicon-select {
+		background-image: url("@{adminPath}/images/icons/16/field-select.png");
+	}
+
+	&.fieldicon-location {
+		background-image: url("@{adminPath}/images/icons/16/field-location.png");
+	}
+
+	&.fieldicon-boolean {
+		background-image: url("@{adminPath}/images/icons/16/field-boolean.png");
+	}
+
+	&.fieldicon-cloudinaryimage {
+		background-image: url("@{adminPath}/images/icons/16/field-image.png");
+	}
+
+	&.fieldicon-s3file {
+		background-image: url("@{adminPath}/images/icons/16/field-file.png");
+	}
+
+	&.fieldicon-relationship {
+		background-image: url("@{adminPath}/images/icons/16/field-numericSelect.png");
+	}
+
+	&.fieldicon-date {
+		background-image: url("@{adminPath}/images/icons/16/field-date.png");
+	}
+
+	&.fieldicon-datetime {
+		background-image: url("@{adminPath}/images/icons/16/field-dateTime.png");
+	}
+
+	&.fieldicon-money {
+		background-image: url("@{adminPath}/images/icons/16/field-money.png");
+	}
+
+	&.fieldicon-number {
+		background-image: url("@{adminPath}/images/icons/16/field-number.png");
+	}
+
+	&.fieldicon-sort {
+		background-image: url("@{adminPath}/images/icons/16/field-sort.png");
+	}
 }
+
 .dropdown-menu .fieldicon {
 	margin-right: 10px;
 }
+
 .dropdown-menu .icon {
 	color: @gray-light;
 	display: inline-block;
 	width: 25px;
 	margin-left: -5px;
 }
-
-
 
 
 // Items List
@@ -98,8 +149,6 @@
 }
 
 
-
-
 // List Management
 // ------------------------------
 
@@ -109,10 +158,10 @@
 
 	// stop text selection whilst row is in manage mode
 	-webkit-touch-callout: none;
-	  -webkit-user-select: none;
-		 -moz-user-select: none;
-		  -ms-user-select: none;
-			  user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 
 	// apply selectable styles to anchors
 	a {
@@ -129,6 +178,7 @@
 		}
 	}
 }
+
 .ItemList__row--selected {
 	background-color: white;
 	color: @text-color;
@@ -136,6 +186,7 @@
 	> td:first-child {
 		box-shadow: -2px 0 0 @app-primary;
 	}
+
 	a {
 		color: inherit;
 	}
@@ -150,13 +201,39 @@
 	cursor: move;
 	opacity: 1;
 }
+
+@-webkit-keyframes flash {
+	0% { opacity: 1; }
+	50% { opacity: .4; }
+	100% { opacity: 1; }
+}
+@keyframes flash {
+	0% { opacity: 1; }
+	50% { opacity: .4; }
+	100% { opacity: 1; }
+}
+
+.ItemList__row--inserted {
+	background-color: #c8ff7c;
+	-webkit-animation: flash linear 1s 2;
+	animation: flash linear 1s 2;
+}
+
+.ItemList__row--updated {
+	background-color: #fbff98;
+	-webkit-animation: flash linear 1s 2;
+	animation: flash linear 1s 2;
+}
+
 .ItemList__row--success,
 .ItemList__row--failure {
 	animation: listitem-finished-dragging 1.8s;
 }
 
 @-webkit-keyframes listitem-finished-dragging {
-	from { background-color: #fff6c0; }
+	from {
+		background-color: #fff6c0;
+	}
 }
 
 
@@ -168,6 +245,7 @@
 	margin: -@table-padding;
 	padding: @table-padding;
 }
+
 .ItemList__link--interior {
 	color: @text-color;
 
@@ -177,6 +255,7 @@
 		outline: none;
 	}
 }
+
 .ItemList__link--exterior {
 	&:hover,
 	&:focus {
@@ -190,8 +269,6 @@
 .ItemList__link--empty {
 	color: #999;
 }
-
-
 
 
 // Field Specific
@@ -231,7 +308,6 @@
 }
 
 
-
 // Responsive tables
 // ------------------------------
 //
@@ -247,6 +323,7 @@
 		-webkit-overflow-scrolling: touch;
 		width: 100%;
 	}
+
 	.ItemList__value {
 		max-width: none;
 	}
@@ -269,8 +346,6 @@
 		}
 	}
 }
-
-
 
 
 // Complementary list files

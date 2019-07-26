@@ -10,6 +10,7 @@
  */
 
 var http = require('http');
+var io = require('socket.io');
 
 module.exports = function (keystone, app, callback) {
 
@@ -19,12 +20,20 @@ module.exports = function (keystone, app, callback) {
 
 	keystone.httpServer = http
 		.createServer(app)
-		.listen(port, host, function ready (err) {
-			if (err) { return callback(err); }
+		.listen(port, host, function ready(err) {
+			if (err) {
+				return callback(err);
+			}
 
 			var message = keystone.get('name') + ' is ready on '
 				+ 'http://' + host + ':' + port
 				+ (forceSsl ? ' (SSL redirect)' : '');
+
+
+			io = io.listen(keystone.httpServer);
+			keystone.set('socket', io);
+
+
 			callback(null, message);
 		});
 

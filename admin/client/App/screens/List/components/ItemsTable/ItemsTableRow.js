@@ -35,6 +35,8 @@ const ItemsRow = React.createClass({
 			'ItemList__row--manage': this.props.manageMode,
 			'ItemList__row--success': this.props.rowAlert.success === itemId,
 			'ItemList__row--failure': this.props.rowAlert.fail === itemId,
+			'ItemList__row--inserted': item.focus_inserted,
+			'ItemList__row--updated': item.focus_updated,
 		});
 		// item fields
 		var cells = this.props.columns.map((col, i) => {

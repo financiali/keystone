@@ -15,6 +15,7 @@ module.exports = function (req, res) {
 			var error = err.error === 'database error' ? err.detail : err;
 			return res.apiError(status, error);
 		} else {
+
 			new keystone.lists.UserLog.model({
 				date: Date.now(),
 				module: req.list.key,

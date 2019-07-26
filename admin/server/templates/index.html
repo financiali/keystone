@@ -30,6 +30,10 @@
 <% if (fieldTypes.code) { -%>
     <script src="<%= codemirrorPath %>/codemirror-compressed.js"></script>
 <% } -%>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+		window.socket = io();
+	</script>
     <script src="<%= adminPath %>/js/packages.js"></script>
     <script src="<%= adminPath %>/js/fields.js"></script>
     <script src="<%= adminPath %>/js/admin.js"></script>
