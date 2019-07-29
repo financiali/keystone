@@ -82,6 +82,7 @@ const ListView = React.createClass({
 
 		window.socket.on('list/insert', function (item) {
 
+			console.log(_self.props.currentList)
 			if (_self.props.currentList.id == item.list_id) {
 				_self.props.currentList.items.results.unshift(item);
 				_self.props.currentList.items.count++;
