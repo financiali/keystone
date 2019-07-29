@@ -81,23 +81,28 @@ const ListView = React.createClass({
 		const _self = this;
 
 		window.socket.on('list/insert', function (item) {
-			_self.props.currentList.items.results.unshift(item);
-			_self.props.currentList.items.count++;
 
-			item['focus_inserted'] = true;
-			_self.setState({
-				currentList: _self.props.currentList,
-			});
+			if (_self.props.currentList.id == item.list_id) {
+				_self.props.currentList.items.results.unshift(item);
+				_self.props.currentList.items.count++;
+				item['focus_inserted'] = true;
+				_self.setState({
+					currentList: _self.props.currentList,
+				});
+			}
+
 		});
 
 		window.socket.on('list/update', function (item) {
-			item['focus_updated'] = true;
-			const item_index = _.findIndex(_self.props.currentList.items.results, {'id': item.id});
-			_self.props.currentList.items.results[item_index] = item;
+			if (_self.props.currentList.id == item.list_id) {
+				item['focus_updated'] = true;
+				const item_index = _.findIndex(_self.props.currentList.items.results, {'id': item.id});
+				_self.props.currentList.items.results[item_index] = item;
 
-			_self.setState({
-				currentList: _self.props.currentList,
-			});
+				_self.setState({
+					currentList: _self.props.currentList,
+				});
+			}
 		})
 
 	},
