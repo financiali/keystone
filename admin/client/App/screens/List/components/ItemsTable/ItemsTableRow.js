@@ -3,8 +3,8 @@ import classnames from 'classnames';
 
 import ListControl from '../ListControl';
 
-import { Columns } from 'FieldTypes';
-import { DropTarget, DragSource } from 'react-dnd';
+import {Columns} from 'FieldTypes';
+import {DropTarget, DragSource} from 'react-dnd';
 
 import {
 	setDragBase,
@@ -27,7 +27,7 @@ const ItemsRow = React.createClass({
 		connectDropTarget: React.PropTypes.func, // eslint-disable-line react/sort-prop-types
 		connectDragPreview: React.PropTypes.func, // eslint-disable-line react/sort-prop-types
 	},
-	renderRow (item) {
+	renderRow(item) {
 		const itemId = item.id;
 		const rowClassname = classnames({
 			'ItemList__row--dragging': this.props.isDragging,
@@ -35,31 +35,34 @@ const ItemsRow = React.createClass({
 			'ItemList__row--manage': this.props.manageMode,
 			'ItemList__row--success': this.props.rowAlert.success === itemId,
 			'ItemList__row--failure': this.props.rowAlert.fail === itemId,
-			'ItemList__row--inserted': item.focus_inserted,
-			'ItemList__row--updated': item.focus_updated,
+			'ItemList__row--inserted': item.focus_inserted === true,
+			'ItemList__row--updated': item.focus_updated === true,
 		});
+
 		// item fields
 		var cells = this.props.columns.map((col, i) => {
 			var ColumnType = Columns[col.type] || Columns.__unrecognised__;
 			var linkTo = !i ? `${Keystone.adminPath}/${this.props.list.path}/${itemId}` : undefined;
-			return <ColumnType key={col.path} list={this.props.list} col={col} data={item} linkTo={linkTo} />;
+			return <ColumnType key={col.path} list={this.props.list} col={col} data={item} linkTo={linkTo}/>;
 		});
 
 		// add sortable icon when applicable
 		if (this.props.list.sortable) {
-			cells.unshift(<ListControl key="_sort" type="sortable" dragSource={this.props.connectDragSource} />);
+			cells.unshift(<ListControl key="_sort" type="sortable" dragSource={this.props.connectDragSource}/>);
 		}
 
 		// add delete/check icon when applicable
 		if (!this.props.list.nodelete) {
 			cells.unshift(this.props.manageMode ? (
-				<ListControl key="_check" type="check" active={this.props.checkedItems[itemId]} />
+				<ListControl key="_check" type="check" active={this.props.checkedItems[itemId]}/>
 			) : (
-				<ListControl key="_delete" onClick={(e) => this.props.deleteTableItem(item, e)} type="delete" />
+				<ListControl key="_delete" onClick={(e) => this.props.deleteTableItem(item, e)} type="delete"/>
 			));
 		}
 
-		var addRow = (<tr key={'i' + item.id} onClick={this.props.manageMode ? (e) => this.props.checkTableItem(item, e) : null} className={rowClassname}>{cells}</tr>);
+		var addRow = (
+			<tr key={'i' + item.id} onClick={this.props.manageMode ? (e) => this.props.checkTableItem(item, e) : null}
+					className={rowClassname}>{cells}</tr>);
 
 		if (this.props.list.sortable) {
 			return (
@@ -71,7 +74,7 @@ const ItemsRow = React.createClass({
 			return (addRow);
 		}
 	},
-	render () {
+	render() {
 		return this.renderRow(this.props.item);
 	},
 });
@@ -84,12 +87,12 @@ module.exports = exports = ItemsRow;
  * Implements drag source.
  */
 const dragItem = {
-	beginDrag (props) {
-		const send = { ...props };
+	beginDrag(props) {
+		const send = {...props};
 		props.dispatch(setDragBase(props.item, props.index));
-		return { ...send };
+		return {...send};
 	},
-	endDrag (props, monitor, component) {
+	endDrag(props, monitor, component) {
 		if (!monitor.didDrop()) {
 			props.dispatch(resetItems(props.id));
 			return;
@@ -118,10 +121,10 @@ const dragItem = {
  * Implements drag target.
  */
 const dropItem = {
-	drop (props, monitor, component) {
-		return { ...props };
+	drop(props, monitor, component) {
+		return {...props};
 	},
-	hover (props, monitor, component) {
+	hover(props, monitor, component) {
 		// reset row alerts
 		if (props.rowAlert.success || props.rowAlert.fail) {
 			props.dispatch(setRowAlert({
@@ -145,7 +148,7 @@ const dropItem = {
 /**
  * Specifies the props to inject into your component.
  */
-function dragProps (connect, monitor) {
+function dragProps(connect, monitor) {
 	return {
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging(),
@@ -153,7 +156,7 @@ function dragProps (connect, monitor) {
 	};
 }
 
-function dropProps (connect) {
+function dropProps(connect) {
 	return {
 		connectDropTarget: connect.dropTarget(),
 	};
