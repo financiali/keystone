@@ -106,6 +106,8 @@ const ListView = React.createClass({
 			}
 		})
 
+		this.toggleTableWidth();
+
 	},
 	componentWillReceiveProps(nextProps) {
 		// We've opened a new list from the client side routing, so initialize
