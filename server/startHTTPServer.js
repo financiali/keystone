@@ -34,6 +34,17 @@ module.exports = function (keystone, app, callback) {
 			keystone.set('socket', io);
 
 
+			io.use(function (socket, next) {
+				// console.log("Query: ", socket.handshake.query);
+				// return the result of next() to accept the connection.
+				if (typeof socket.handshake.query.tx !== "undefined") {
+					console.log('joining room', socket.handshake.query.tx);
+					socket.join('tx_' + socket.handshake.query.tx);
+				}
+				return next();
+			});
+
+
 			callback(null, message);
 		});
 
