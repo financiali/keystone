@@ -41,6 +41,13 @@ module.exports = function (keystone, app, callback) {
 					console.log('joining room', socket.handshake.query.tx);
 					socket.join('tx_' + socket.handshake.query.tx);
 				}
+				if (typeof socket.handshake.query.token !== "undefined" && typeof socket.handshake.query.user !== "undefined" && typeof socket.handshake.query.user.id !== "undefined") {
+					console.log('joining room', socket.handshake.query.tx);
+
+					socket.join('user_' + socket.handshake.query.user.id);
+					socket.join('list/update/' + socket.handshake.query.user.id);
+					socket.join('list/insert/' + socket.handshake.query.user.id);
+				}
 				return next();
 			});
 

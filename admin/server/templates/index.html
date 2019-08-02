@@ -34,7 +34,8 @@
     <script type="text/javascript">
 		window.socket = io({
 			query: {
-				token:'<%- keystone.csrf.header["x-csrf-token"] %>'
+				token:'<%- keystone.csrf.header["x-csrf-token"] %>',
+				user: Keystone.user
 			}
 		});
 	</script>
