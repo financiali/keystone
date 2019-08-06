@@ -25,6 +25,10 @@ module.exports = function (req, res) {
 		});
 	}
 
+	if (req.list.get('rowColors')) {
+		// console.log(req.list.get('rowColors'))
+	}
+
 
 	var filters = req.query.filters;
 	if (filters && typeof filters === 'string') {

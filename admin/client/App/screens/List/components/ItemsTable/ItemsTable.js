@@ -95,6 +95,7 @@ const ItemsTable = React.createClass({
 	},
 	render () {
 		const { items } = this.props;
+		// console.log(this.props)
 		if (!items.results.length) return null;
 
 		const tableBody = (this.props.list.sortable) ? (
@@ -102,6 +103,7 @@ const ItemsTable = React.createClass({
 		) : (
 			<tbody >
 				{items.results.map((item, i) => {
+					// console.log(item)
 					return (
 						<TableRow key={item.id}
 							deleteTableItem={this.props.deleteTableItem}

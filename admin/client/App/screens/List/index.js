@@ -238,6 +238,7 @@ const ListView = React.createClass({
 				itemCount={this.props.items.count}
 				itemsPerPage={this.props.lists.page.size}
 				nodelete={currentList.nodelete}
+				rowColors={currentList.rowColors}
 				noedit={currentList.noedit}
 				selectAllItemsLoading={selectAllItemsLoading}
 			/>

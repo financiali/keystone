@@ -28,6 +28,8 @@ const ItemsRow = React.createClass({
 		connectDragPreview: React.PropTypes.func, // eslint-disable-line react/sort-prop-types
 	},
 	renderRow(item) {
+		// console.log(this.props.list)
+		console.log(item)
 		const itemId = item.id;
 		const rowClassname = classnames({
 			'ItemList__row--dragging': this.props.isDragging,
@@ -60,8 +62,12 @@ const ItemsRow = React.createClass({
 			));
 		}
 
+		var color = this.getRowColor();
+
+
 		var addRow = (
-			<tr key={'i' + item.id} onClick={this.props.manageMode ? (e) => this.props.checkTableItem(item, e) : null}
+			<tr style={{backgroundColor: color}} key={'i' + item.id}
+					onClick={this.props.manageMode ? (e) => this.props.checkTableItem(item, e) : null}
 					className={rowClassname}>{cells}</tr>);
 
 		if (this.props.list.sortable) {
@@ -77,6 +83,25 @@ const ItemsRow = React.createClass({
 	render() {
 		return this.renderRow(this.props.item);
 	},
+	getRowColor: function () {
+		var _colors = {};
+		var _item = this.props.item;
+
+		// console.log(this.props.list.rowColors.length)
+		var _color = 'transparent';
+		for (var i = 0; i < this.props.list.rowColors.length; i++) {
+			var _color_filter = this.props.list.rowColors[i];
+
+
+			if (typeof _item.fields[_color_filter.key] !== "undefined" && _item.fields[_color_filter.key] === _color_filter.value) {
+				_color = _color_filter.color;
+			}
+
+			//console.log(_color_filter)
+			// _colors[_color]
+		}
+		return _color;
+	}
 });
 
 module.exports = exports = ItemsRow;

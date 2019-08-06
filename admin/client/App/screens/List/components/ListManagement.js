@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import {
 	Button,
 	GlyphButton,
@@ -7,24 +7,25 @@ import {
 	Spinner,
 } from '../../../elemental';
 
-function ListManagement ({
-	checkedItemCount,
-	handleDelete,
-	handleSelect,
-	handleToggle,
-	isOpen,
-	itemCount,
-	itemsPerPage,
-	nodelete,
-	noedit,
-	selectAllItemsLoading,
-	...props
-}) {
+function ListManagement({
+													checkedItemCount,
+													handleDelete,
+													handleSelect,
+													handleToggle,
+													isOpen,
+													itemCount,
+													itemsPerPage,
+													nodelete,
+													rowColors,
+													noedit,
+													selectAllItemsLoading,
+													...props
+												}) {
 	// do not render if there's no results
 	// or if edit/delete unavailable on the list
 	if (!itemCount || (nodelete && noedit)) return null;
 
-	const buttonNoteStyles = { color: '#999', fontWeight: 'normal' };
+	const buttonNoteStyles = {color: '#999', fontWeight: 'normal'};
 
 	// delete button
 	const actionButtons = isOpen && (
@@ -52,7 +53,8 @@ function ListManagement ({
 				active={allVisibleButtonIsActive}
 				onClick={() => handleSelect('all')}
 				title="Select all rows (including those not visible)">
-				{selectAllItemsLoading ? <Spinner/> : 'All'} <small style={buttonNoteStyles}>({itemCount})</small>
+				{selectAllItemsLoading ? <Spinner/> : 'All'}
+				<small style={buttonNoteStyles}>({itemCount})</small>
 			</Button>
 		</Section>
 	);
@@ -68,7 +70,8 @@ function ListManagement ({
 					</Button>
 				</Section>
 				<Section>
-					<Button active={noneButtonIsActive} onClick={() => handleSelect('none')} title="Deselect all rows">None</Button>
+					<Button active={noneButtonIsActive} onClick={() => handleSelect('none')}
+									title="Deselect all rows">None</Button>
 				</Section>
 			</Group>
 		</Section>
@@ -77,7 +80,7 @@ function ListManagement ({
 	// selected count text
 	const selectedCountText = isOpen ? (
 		<Section>
-			<span style={{ color: '#666', display: 'inline-block', lineHeight: '2.4em', margin: 1 }}>
+			<span style={{color: '#666', display: 'inline-block', lineHeight: '2.4em', margin: 1}}>
 				{checkedItemCount} selected
 			</span>
 		</Section>
@@ -86,7 +89,7 @@ function ListManagement ({
 	// put it all together
 	return (
 		<div>
-			<Group style={{ float: 'left', marginRight: '.75em', marginBottom: 0 }}>
+			<Group style={{float: 'left', marginRight: '.75em', marginBottom: 0}}>
 				<Section>
 					<Button active={isOpen} onClick={() => handleToggle(!isOpen)}>
 						Manage
@@ -110,6 +113,7 @@ ListManagement.propTypes = {
 	itemsPerPage: PropTypes.number,
 	nodelete: PropTypes.bool,
 	noedit: PropTypes.bool,
+	rowColors: PropTypes.array,
 	selectAllItemsLoading: PropTypes.bool,
 };
 
