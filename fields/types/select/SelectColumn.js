@@ -101,6 +101,7 @@ var SelectColumn = React.createClass({
 			} else {
 				cb(data);
 			}
+			this.toggleConfirmDialog();
 		});
 	},
 	getInputName(path) {
