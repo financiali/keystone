@@ -145,8 +145,20 @@ var SelectColumn = React.createClass({
 	},
 	toggleConfirmDialog() {
 		this.setState({
-			state_confirm: !this.state.state_confirm,
+			state_confirm: false,
 		});
+	},
+	renderConfirmDialog() {
+		return (
+			<ConfirmationDialog
+				confirmationLabel="Confirm"
+				isOpen={this.state.state_confirm}
+				onCancel={this.toggleConfirmDialog}
+				onConfirmation={this.valueChanged}
+			>
+				<p>Are you sure change to <strong>{this.state.state_confirm}</strong>?</p>
+			</ConfirmationDialog>
+		)
 	},
 	renderValue() {
 
@@ -176,35 +188,21 @@ var SelectColumn = React.createClass({
 		// console.log(options);
 
 		if (this.state.show_options) {
-			if (this.state.state_confirm) {
-				return (
-					<ConfirmationDialog
-						confirmationLabel="Confirm"
-						isOpen={true}
-						onCancel={this.toggleConfirmDialog}
-						onConfirmation={this.valueChanged}
-					>
-						<p>Are you sure change to <strong>{this.state.state_confirm}</strong>?</p>
-					</ConfirmationDialog>
-				)
-			} else {
-				return (
-					<div
-						className='select-menu'>
-						<input type="text" style={{position: 'absolute', width: 1, height: 1, zIndex: -1, opacity: 0}}
-									 tabIndex="-1"/>
-						<Select
-										simpleValue
-										name={this.getInputName(path)}
-										clearable={clearable}
-										value={value}
-										options={options}
-										onChange={this.valueChanged2}
-						/>
-					</div>
-				)
-			}
-
+			return (
+				<div
+					className='select-menu'>
+					<input type="text" style={{position: 'absolute', width: 1, height: 1, zIndex: -1, opacity: 0}}
+								 tabIndex="-1"/>
+					<Select
+						simpleValue
+						name={this.getInputName(path)}
+						clearable={clearable}
+						value={value}
+						options={options}
+						onChange={this.valueChanged2}
+					/>
+				</div>
+			)
 		} else if (options.length === 0) {
 			var color = _ruleOptions.button;
 
@@ -228,6 +226,7 @@ var SelectColumn = React.createClass({
 	render() {
 		return (
 			<ItemsTableCell>
+				{this.renderConfirmDialog()}
 				{this.renderValue()}
 			</ItemsTableCell>
 		);
