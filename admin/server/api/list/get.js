@@ -41,7 +41,6 @@ module.exports = function (req, res) {
 	// console.log(req.query)
 	if (req.query.search) {
 		assign(where, req.list.addSearchToQuery(req.query.search));
-		console.log(where)
 	}
 	var query = req.list.model.find(where);
 
