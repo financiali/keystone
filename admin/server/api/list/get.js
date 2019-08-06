@@ -21,7 +21,7 @@ module.exports = function (req, res) {
 	}
 	if (req.list.get('queryFilter')) {
 		req.list.get('queryFilter')(req, res, function (query_filters) {
-			where = query_filters;
+			where = query_filters || {};
 		});
 	}
 
@@ -36,11 +36,14 @@ module.exports = function (req, res) {
 	if (where && filters && typeof filters === 'object') {
 		assign(where, req.list.addFiltersToQuery(filters));
 	}
+
+
+	// console.log(req.query)
 	if (req.query.search) {
 		assign(where, req.list.addSearchToQuery(req.query.search));
+		console.log(where)
 	}
 	var query = req.list.model.find(where);
-
 
 
 	if (req.query.populate) {
