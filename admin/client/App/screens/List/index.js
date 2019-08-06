@@ -240,6 +240,7 @@ const ListView = React.createClass({
 				nodelete={currentList.nodelete}
 				rowColors={currentList.rowColors}
 				noedit={currentList.noedit}
+				rules={currentList.rules}
 				selectAllItemsLoading={selectAllItemsLoading}
 			/>
 		);
