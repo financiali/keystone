@@ -82,7 +82,7 @@ const ListView = React.createClass({
 
 		window.socket.on('list/insert/' + Keystone.user.id, function (item) {
 
-			console.log(_self.props.currentList)
+			// console.log(_self.props.currentList)
 			if (_self.props.currentList.id == item.list_id) {
 				_self.props.currentList.items.results.unshift(item);
 				_self.props.currentList.items.count++;
