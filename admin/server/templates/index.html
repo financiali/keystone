@@ -33,6 +33,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
 		window.socket = io({
+			transports: [ 'websocket' ],
 			query: {
 				token:'<%- keystone.csrf.header["x-csrf-token"] %>',
 				user: <%- JSON.stringify(keystone.user.id) %>
