@@ -38,6 +38,7 @@ module.exports = function (req, res) {
 			return res.apiError('database error', err);
 		}
 		async.forEachLimit(results, 10, function (item, next) {
+			var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 			item._req_user = req.user;
 			if (item.delete) {
 				item.delete(req.user._id, function (a, b) {
@@ -45,6 +46,7 @@ module.exports = function (req, res) {
 						date: Date.now(),
 						module: req.list.key,
 						action: 'delete',
+						ip: ip,
 						user: req.user._id
 					}).save();
 					next();
@@ -58,6 +60,7 @@ module.exports = function (req, res) {
 						date: Date.now(),
 						module: req.list.key,
 						action: 'delete',
+						ip: ip,
 						user: req.user._id
 					}).save();
 					next();

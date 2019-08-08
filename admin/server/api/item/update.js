@@ -12,10 +12,13 @@ module.exports = function (req, res) {
 				var error = err.error === 'database error' ? err.detail : err;
 				return res.apiError(status, error);
 			}else{
+				var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
 				new keystone.lists.UserLog.model({
 					date: Date.now(),
 					module: req.list.key,
 					action: 'update',
+					ip: ip,
 					user: req.user._id
 				}).save(function (err, logResponse) {
 					req.list.model.findById(req.params.id, function (err, updatedItem) {
