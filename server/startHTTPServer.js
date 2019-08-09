@@ -28,7 +28,7 @@ module.exports = function (keystone, app, callback) {
 				return callback(err);
 			}
 
-			var message = keystone.get('name') + ' is ready on '
+			var message = keystone.get('name') + ' is ready on AWS '
 				+ 'http://' + host + ':' + port
 				+ (forceSsl ? ' (SSL redirect)' : '');
 
@@ -45,11 +45,12 @@ module.exports = function (keystone, app, callback) {
 					console.log('joining room', socket.handshake.query.tx);
 					socket.join('tx_' + socket.handshake.query.tx);
 				}
-				if (typeof socket.handshake.query.token !== "undefined" && typeof socket.handshake.query.user !== "undefined" && false) {
+				if (typeof socket.handshake.query.token !== "undefined" && typeof socket.handshake.query.user !== "undefined") {
 					console.log('joining room', socket.handshake.query.user);
 					socket.join('user_' + socket.handshake.query.user);
-					socket.join('list/update/' + socket.handshake.query.user);
-					socket.join('list/insert/' + socket.handshake.query.user);
+					socket.join('user/' + socket.handshake.query.user);
+					// socket.join('list/update/' + socket.handshake.query.user);
+					// socket.join('list/insert/' + socket.handshake.query.user);
 				}
 				return next();
 			});

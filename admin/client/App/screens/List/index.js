@@ -80,7 +80,7 @@ const ListView = React.createClass({
 
 		const _self = this;
 
-		window.socket.on('list/insert/' + Keystone.user.id, function (item) {
+		window.socket.on('list/insert', function (item) {
 
 			// console.log(_self.props.currentList)
 			if (_self.props.currentList.id == item.list_id) {
@@ -94,7 +94,7 @@ const ListView = React.createClass({
 
 		});
 
-		window.socket.on('list/update/' + Keystone.user.id, function (item) {
+		window.socket.on('list/update', function (item) {
 			if (_self.props.currentList.id == item.list_id) {
 				item['focus_updated'] = true;
 				const item_index = _.findIndex(_self.props.currentList.items.results, {'id': item.id});
