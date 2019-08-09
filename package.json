@@ -75,6 +75,7 @@
     "multer": "^1.4.1",
     "numeral": "^2.0.6",
     "object-assign": "^4.1.1",
+    "pizzicato": "^0.6.4",
     "pug": "^2.0.4",
     "qs": "^6.7.0",
     "queryfilter": "^0.0.4",

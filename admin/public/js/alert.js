@@ -1,24 +1,31 @@
 $(document).ready(function () {
 	$('body').append('<div class="alert-container"><div class="alert-message"></div><div class="close-container-btn">X</div> </div>');
 
-	var audioElement = document.createElement('audio');
-	audioElement.setAttribute('src', '/sounds/alert2.mp3');
-
-
 	var timer = null;
+	var soundFile = null;
 
 	var clear = function () {
 		$('body').removeClass('alert-state');
 		$('.alert-container').removeClass('show')
 		$('.alert-container .alert-message').html('');
-		audioElement.pause();
-		audioElement.currentTime = 0;
+		if (soundFile) {
+			soundFile.pause()
+		}
 	};
 
 	window.socket.on('alert', function (data) {
 		var type = data.type;
 		var message = data.message;
+		var bg_color = data.bg_color || '#2b2e2b';
+		var timeout = data.timeout || 15000;
 
+		if (typeof data.sound !== "undefined") {
+			soundFile = new Pizzicato.Sound(data.sound, function () {
+				soundFile.play();
+			});
+		}
+
+		$('.alert-container').css('background-color', bg_color);
 
 		if (timer) clearTimeout(timer);
 		clear();
@@ -26,10 +33,9 @@ $(document).ready(function () {
 
 		timer = setTimeout(function () {
 			clear();
-		}, 25000);
+		}, timeout);
 
-		if (type === 'alert') {
-			audioElement.play();
+		if (type === 'alert' && typeof message!=="undefined" && message.length>0) {
 			$('body').addClass('alert-state');
 			$('.alert-container').addClass('show');
 			$('.alert-container .alert-message').html(message);
@@ -37,7 +43,8 @@ $(document).ready(function () {
 
 	});
 
-	$('.close-container-btn').on('click', function () {
+	$('.alert-container').on('click', function () {
 		clear();
 	})
+
 });
