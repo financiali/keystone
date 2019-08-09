@@ -2,7 +2,7 @@ $(document).ready(function () {
 	$('body').append('<div class="alert-container"><div class="alert-message"></div><div class="close-container-btn">X</div> </div>');
 
 	var audioElement = document.createElement('audio');
-	audioElement.setAttribute('src', '/sounds/alert.mp3');
+	audioElement.setAttribute('src', '/sounds/alert2.mp3');
 
 
 	var timer = null;

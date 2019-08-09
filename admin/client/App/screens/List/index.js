@@ -2,7 +2,7 @@
  * The list view is a paginated table of all items in the list. It can show a
  * variety of information about the individual items in columns.
  */
-
+var audios = {};
 import _ from 'lodash';
 import React from 'react';
 // import { findDOMNode } from 'react-dom'; // TODO re-implement focus when ready
@@ -74,6 +74,7 @@ const ListView = React.createClass({
 		const isNoCreate = this.props.lists.data[this.props.params.listId].nocreate;
 		const shouldOpenCreate = this.props.location.search === '?create';
 
+
 		this.setState({
 			showCreateForm: (shouldOpenCreate && !isNoCreate) || Keystone.createFormErrors,
 		});
@@ -81,17 +82,21 @@ const ListView = React.createClass({
 		const _self = this;
 
 		window.socket.on('list/insert', function (item) {
-
-			// console.log(_self.props.currentList)
 			if (_self.props.currentList.id == item.list_id) {
 				_self.props.currentList.items.results.unshift(item);
 				_self.props.currentList.items.count++;
 				item['focus_inserted'] = true;
+				if (typeof item.play !== "undefined") {
+					const sound = new Audio();
+					sound.src = item.play;
+					sound.addEventListener('load', function () {
+						sound.play();
+					});
+				}
 				_self.setState({
 					currentList: _self.props.currentList,
 				});
 			}
-
 		});
 
 		window.socket.on('list/update', function (item) {
@@ -100,11 +105,19 @@ const ListView = React.createClass({
 				const item_index = _.findIndex(_self.props.currentList.items.results, {'id': item.id});
 				_self.props.currentList.items.results[item_index] = item;
 
+				if (typeof item.play !== "undefined") {
+					const sound = new Audio();
+					sound.src = item.play;
+					sound.addEventListener('load', function () {
+						sound.play();
+					});
+				}
+
 				_self.setState({
 					currentList: _self.props.currentList,
 				});
 			}
-		})
+		});
 
 		this.toggleTableWidth();
 

@@ -37,6 +37,8 @@ module.exports = function IndexRoute(req, res) {
 	var keystoneData = {
 		adminPath: '/' + keystone.get('admin path'),
 		appversion: keystone.get('appversion'),
+		item_insert_sound: keystone.get('item_insert_sound'),
+		item_update_sound: keystone.get('item_update_sound'),
 		backUrl: backUrl,
 		brand: keystone.get('brand'),
 		csrf: {header: {}},
