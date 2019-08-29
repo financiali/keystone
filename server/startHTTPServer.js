@@ -34,26 +34,31 @@ module.exports = function (keystone, app, callback) {
 
 
 			io = io.listen(keystone.httpServer);
-			io.adapter(redisAdapter({ url:process.env.REDIS_URI}));
+			io.adapter(redisAdapter({url: process.env.REDIS_URI}));
 			keystone.set('socket', io);
 
+			// io.on('connection', (socket) => {
+			// 	console.log(socket.handshake.query)
+			// });
 
-			io.use(function (socket, next) {
-				// console.log("Query: ", socket.handshake.query);
-				// return the result of next() to accept the connection.
-				if (typeof socket.handshake.query.tx !== "undefined") {
-					console.log('joining room', socket.handshake.query.tx);
-					socket.join('tx_' + socket.handshake.query.tx);
+			if (keystone.get('socket use')) {
+				var socket_mw = keystone.get('socket use');
+				for (var i = 0; i < socket_mw.length; i++) {
+					io.use(socket_mw[i])
 				}
-				if (typeof socket.handshake.query.token !== "undefined" && typeof socket.handshake.query.user !== "undefined") {
-					console.log('joining room', socket.handshake.query.user);
-					socket.join('user_' + socket.handshake.query.user);
-					socket.join('user/' + socket.handshake.query.user);
-					// socket.join('list/update/' + socket.handshake.query.user);
-					// socket.join('list/insert/' + socket.handshake.query.user);
+			}
+
+			if (keystone.get('socket listeners')) {
+				var socket_listeners = keystone.get('socket listeners');
+				for (var i = 0; i < socket_listeners.length; i++) {
+					var socket_listener = socket_listeners[i];
+					if (socket_listener && typeof socket_listener.fn === 'function') {
+						console.log('Listening socket on ', socket_listener.type)
+						io.on(socket_listener.type, socket_listener.fn)
+					}
 				}
-				return next();
-			});
+			}
+			// io.use();
 
 
 			callback(null, message);

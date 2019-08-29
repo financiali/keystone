@@ -10,7 +10,7 @@ module.exports = function initList(req, res, next) {
 		return res.redirect('/' + keystone.get('admin path'));
 	} else {
 		// @todo security check very important
-		if (!req.user.modulesList.includes(req.list.key) && !req.user.isRoot && (req.query.basic && req.query.basic.toString().length)) {
+		if (!req.user.modules.includes(req.list.key) && !req.user.isRoot && (req.query.basic && req.query.basic.toString().length)) {
 			// return res.status(501).json({error: 'invalid list path'});
 			next(new Error('Not allowed'));
 		} else {
