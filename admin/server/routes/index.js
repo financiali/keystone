@@ -118,7 +118,7 @@ function initNav(keystone, user) {
 	let sections = keystone.get('nav');
 
 	const userModules = user.modules.map(function (userModule) {
-		return (userModule.name + 's').toLowerCase();
+		return (userModule.name).toLowerCase();
 	});
 
 
