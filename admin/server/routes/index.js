@@ -187,10 +187,18 @@ function initNav(keystone, user) {
 			}
 			throw new Error('Invalid Keystone Option (nav): ' + i + ' is in an unrecognized format.\n');
 		});
-		if (section.lists.length && (userModules.includes(section.key.toString().toLowerCase()) || user.isRoot)) {
-			nav.sections.push(section);
-			nav.by.section[section.key] = section;
-		}
+		_.forEach(sections, function (root_section, root_key) {
+					let _count = 0;
+					_.forEach(section.lists, function (sub_section, sub_key) {
+							if (userModules.includes(sub_section.key.toLowerCase()) || user.isRoot) {
+									_count++;
+									if (_count === 1) {
+											nav.sections.push(section);
+									}
+									nav.by.section[section.key] = section;
+							}
+					})
+			})
 	});
 
 	return nav;
